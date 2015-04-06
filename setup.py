@@ -29,7 +29,7 @@ setup(
     long_description=long_description,
 
     # The project's main homepage.
-    url='',
+    url='https://github.com/tnkteja/myhelp.git',
 
     # Author details
     author='Neela Krishna Teja Tadikonda',
