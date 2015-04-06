@@ -1,0 +1,10 @@
+#!/home/tnkteja/workspace/pydev_workspace/myhelp_workspace/myhelp00/virtualEnvironment/bin/python
+# EASY-INSTALL-ENTRY-SCRIPT: 'myhelp==1.0.0','console_scripts','myhelp'
+__requires__ = 'myhelp==1.0.0'
+import sys
+from pkg_resources import load_entry_point
+
+if __name__ == '__main__':
+    sys.exit(
+        load_entry_point('myhelp==1.0.0', 'console_scripts', 'myhelp')()
+    )
