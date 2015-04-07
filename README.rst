@@ -1,6 +1,5 @@
-A sample Python project
-=======================
+myhelp
+======
 
-A sample project that exists as an aid to the `Python Packaging User Guide
-<https://packaging.python.org>`_'s `Tutorial on Packaging and Distributing
-Projects <https://packaging.python.org/en/latest/distributing.html>`_.
+A command line utility to create your own help. Written in python. You can find the link to source at https://github.com/tnkteja/myhelp.git . And distributions available in pypi at https://pypi.python.org/pypi/myhelp/1.0.0
+
