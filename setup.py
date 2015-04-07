@@ -64,7 +64,7 @@ setup(
     ],
 
     # What does your project relate to?
-    keywords='sample setuptools development',
+    keywords='myhelp help mypy',
 
     # You can just specify the packages manually here if your project is
     # simple. Or you can use find_packages().
@@ -81,6 +81,8 @@ setup(
     # for example:
     # $ pip install -e .[dev,test]
     extras_require={
+        'dev': ['check-manifest','wheel','twine'],
+        'test': ['coverage'],
     },
 
     # If there are data files included in your packages that need to be
