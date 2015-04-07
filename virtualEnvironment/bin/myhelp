@@ -1,10 +1,11 @@
 #!/home/tnkteja/workspace/pydev_workspace/myhelp_workspace/myhelp00/virtualEnvironment/bin/python
-# EASY-INSTALL-ENTRY-SCRIPT: 'myhelp==1.0.0','console_scripts','myhelp'
-__requires__ = 'myhelp==1.0.0'
+
+# -*- coding: utf-8 -*-
+import re
 import sys
-from pkg_resources import load_entry_point
+
+from myhelp.myhelp import run
 
 if __name__ == '__main__':
-    sys.exit(
-        load_entry_point('myhelp==1.0.0', 'console_scripts', 'myhelp')()
-    )
+    sys.argv[0] = re.sub(r'(-script\.pyw|\.exe)?$', '', sys.argv[0])
+    sys.exit(run())

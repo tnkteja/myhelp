@@ -29,15 +29,16 @@ def run():
                 fileelement.text=options.editfile
                 tag.append(fileelement)
                 definedtags.pop(definedtags.index(value))
-                if definedtags != []:
-                    for tag in definedtags:
-                        newtag=ET.Element('tag')
-                        newtag.set("value",tag)
-                        newfileelement =ET.SubElement(newtag,'file')
-                        newfileelement.text=options.editfile
-                        roottags.append(newtag)
-                        tree.write(environ["HOME"]+"/.mypy/myhelp/tags.xml")
-                        quit()
+        if definedtags != []:
+            for tag in definedtags:
+                newtag=ET.Element('tag')
+                newtag.set("value",tag)
+                newfileelement =ET.SubElement(newtag,'file')
+                newfileelement.text=options.editfile
+                roottags.append(newtag)
+                tree.write(environ["HOME"]+"/.mypy/myhelp/tags.xml")
+                parse(environ["HOME"]+"/.mypy/myhelp/tags.xml").toprettyxml()
+        quit()
 
     if options.remove:
         pass
@@ -54,3 +55,7 @@ def run():
                 print f.read()
                 f.close()
                 print "-------------------------------------"
+
+if __name__ == "__main__":
+    run()
+

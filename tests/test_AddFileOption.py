@@ -1,8 +1,10 @@
 import unittest
 
-import myhelp
+from myhelp import myhelp
 
-import os
+import types
+
+from subprocess import Popen, PIPE, STDOUT
 
 class TestAddFileOption(unittest.TestCase):
 
@@ -17,9 +19,16 @@ class TestAddFileOption(unittest.TestCase):
 
 
     def testModuleAvailablity(self):
-        if myhelp.myhelp.run:
+        if isinstance(myhelp.run,types.FunctionType):
             self.assertTrue(True,"module available")
-
+	else:
+	    self.assertTrue(False)
+        
+    def testAddFileOption(self):
+         myhelpP = Popen(['myhelp','-e', 'test.txt'], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
+         myhelpP.stdin.write("test testing tested\n")
+         myhelpP.communicate()[0]
+         myhelpP.stdin.close()
 
 
 if __name__ == "__main__":
