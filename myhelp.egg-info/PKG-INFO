@@ -1,6 +1,6 @@
 Metadata-Version: 1.1
 Name: myhelp
-Version: 1.0.0
+Version: 1.0.1
 Summary: myhelp
 Home-page: https://github.com/tnkteja/myhelp.git
 Author: Neela Krishna Teja Tadikonda
@@ -14,7 +14,7 @@ Description: myhelp
         
 Keywords: myhelp help mypy
 Platform: UNKNOWN
-Classifier: Development Status :: 2
+Classifier: Development Status :: 3 - Alpha
 Classifier: Intended Audience :: Developers
 Classifier: Topic :: Software Development :: Build Tools
 Classifier: License :: OSI Approved :: MIT License
