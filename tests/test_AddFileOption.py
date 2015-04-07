@@ -15,7 +15,7 @@ class TestAddFileOption(unittest.TestCase):
 
 
     def tearDown(self):
-        pass
+        os.remove("test.txt")
 
 
     def testModuleAvailablity(self):
