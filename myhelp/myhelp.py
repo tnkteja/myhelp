@@ -1,5 +1,7 @@
-from xml.dom.minidom import parse, parseString
-import xml.dom.minidom
+"""
+This module contains the main logic to run all the logic defined
+"""
+
 import commands
 import xml.etree.ElementTree as ET
 from optparse import OptionParser
@@ -7,14 +9,13 @@ from os import environ
 
 
 def run():
+    """Main method where all logic is defined"""
+
     parser = OptionParser()
 
-    parser.add_option("-e", "--edit", action="store",
-                      type="string", dest="editfile", help="edits/adds a notes")
-    parser.add_option("-o", "--open", action="store",
-                      type="string", dest="openfile", help="opens a notes")
-    parser.add_option("-r", "--remove", action="store",
-                      type="string", dest="remove", help="removes a notes")
+    parser.add_option("-e", "--edit", action="store", type="string", dest="editfile", help="edits/adds a notes")
+    parser.add_option("-o", "--open", action="store", type="string", dest="openfile", help="opens a notes")
+    parser.add_option("-r", "--remove", action="store", type="string", dest="remove", help="removes a notes")
 
     options, args = parser.parse_args()
 
@@ -25,10 +26,8 @@ def run():
     tags = root.iter('tag')
 
     if options.editfile:
-        commands.getoutput("cat " + options.editfile + " >> " + environ[
-                           "HOME"] + "/.mypy/myhelp/notes/" + options.editfile + ";rm -rf " + options.editfile)
-        definedtags = raw_input(
-            "Define Tags (separated by spaces): ").split(" ")
+        commands.getoutput("cat " + options.editfile + " >> " + environ["HOME"] + "/.mypy/myhelp/notes/" + options.editfile + ";rm -rf " + options.editfile)
+        definedtags = raw_input("Define Tags (separated by spaces): ").split(" ")
         definedtags.append(options.editfile)
         for tag in tags:
             value = tag.attrib['value']
@@ -45,7 +44,6 @@ def run():
                 newfileelement.text = options.editfile
                 roottags.append(newtag)
                 tree.write(environ["HOME"] + "/.mypy/myhelp/tags.xml")
-                parse(environ["HOME"] + "/.mypy/myhelp/tags.xml").toprettyxml()
         quit()
 
     if options.remove:
