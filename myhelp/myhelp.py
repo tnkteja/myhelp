@@ -6,6 +6,7 @@ import commands
 import xml.etree.ElementTree as ET
 from optparse import OptionParser
 from os import environ
+from tabulate import tabulate
 
 
 def run():
@@ -52,17 +53,17 @@ def run():
     if options.openfile:
         commands.getoutput(
             "vim " + environ["HOME"] + "/.mypy/myhelp/notes/" + options.openfile)
-
+    table={"File":[],"Results":[]}
     for tag in tags:
         if tag.attrib["value"] == args[0]:
             fileelements = tag.iter("file")
-            print "-------------------------------------"
             for fileelement in fileelements:
                 f = open(
                     environ["HOME"] + "/.mypy/myhelp/notes/" + fileelement.text, "r")
-                print f.read()
+		table["File"].append(fileelement.text)
+		table["Results"].append(f.read())
                 f.close()
-                print "-------------------------------------"
 
+    print tabulate(table,headers="keys",tablefmt="grid")
 if __name__ == "__main__":
     run()
