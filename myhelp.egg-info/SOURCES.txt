@@ -3,8 +3,10 @@ MANIFEST.in
 README.rst
 setup.cfg
 setup.py
+data/tags.xml
 myhelp/__init__.py
 myhelp/myhelp.py
+myhelp/storage.py
 myhelp.egg-info/PKG-INFO
 myhelp.egg-info/SOURCES.txt
 myhelp.egg-info/dependency_links.txt

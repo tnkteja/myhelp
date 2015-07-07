@@ -1,5 +1,3 @@
-
-
 """
 This module contains the main logic to run all the logic defined
 """
@@ -10,21 +8,20 @@ from optparse import OptionParser
 from os import environ
 from tabulate import tabulate
 from subprocess import call
-from storage import *
-from configuration import *
+import ConfigParser
+from myhelp.storage import *
 
 TAGS_XML_DIR = environ["HOME"] + "/.mypy/myhelp/tags.xml"
 
-tree = ET.parse(environ["HOME"] + "/.mypy/myhelp/tags.xml")
-
-root = tree.getroot()
-roottags = root.find('tags')
-tags = roottags.iter('tag')
-rootfiles = root.find('files')
-files = rootfiles.iter('file')
-
 def run():
     """Main method where all logic is defined"""
+    
+    config = ConfigParser.RawConfigParser()
+    config.read(environ["HOME"] + "/.mypy/myhelp/myhelp.cfg")
+    editor = config.get("Editor","path")
+    if not editor:
+	print "Not Editor defined!"
+        quit()
     
     config_option_help="'show' - displays configured options, 'set [section] [name] [value]' - sets config under a section,'set [name] [value]' - sets configuration globally" 
 
@@ -37,6 +34,14 @@ def run():
     parser.add_option("-r", "--remove", action="store", type="string", dest="remove", help="removes a notes")
 
     options, args = parser.parse_args()
+
+    tree = ET.parse(environ["HOME"] + "/.mypy/myhelp/tags.xml")
+
+    root = tree.getroot()
+    roottags = root.find('tags')
+    tags = roottags.iter('tag')
+    rootfiles = root.find('files')
+    files = rootfiles.iter('file')
     
     if options.config:
         if options.config == "show":
@@ -58,8 +63,9 @@ def run():
        print existing_tags
        definedtags=list(set(definedtags)-set(existing_tags))
        print definedtags
+       quit()
        if len(definedtags)>0:
-           modify_tags_xml(note_name,definedtags,files,rootfiles,tags,roottags,tree,TAGS_XML_DIR)  
+           modify_tags_xml(note_name,definedtags)  
 
     def get_tags_from_file(note_name):
         fil = get_file_from_files(note_name)       
@@ -70,15 +76,14 @@ def run():
         return filetaglist
 
     if options.addfile:
-       existing_tags=[]
-       if isFile(options.addfile,files):
+       if isFile(options.addfile):
            existing_tags=get_tags_from_file(options.addfile)
            raw_input("Note exists with tags - "+" ".join(existing_tags)+"\nDo you want to edit the notes ? [Press enter to continue]\n") 
        add_notes(options.addfile,existing_tags)
        quit()
 
     if options.editfile:
-        if isFile(options.editfile,files):
+        if isFile(options.editfile):
             add_notes(note_name,[])
         else:
            raw_input("Note doesn't exist.\nDo you want add note ? [Press enter to continue]")     
@@ -90,20 +95,18 @@ def run():
     if len(args) != 1:
         print "Please use a search term\n example : myhelp <some tag word> "
         quit()
-    _key_File = "Note"
-    _key_Results = "    Results                                     "
-    table={_key_Results:[]}
+
+    table={"File":[],"Results":[]}
     for tag in tags:
         if tag.attrib["value"] == args[0]:
             fileelements = tag.iter("file")
             for fileelement in fileelements:
                 f = open(
                     environ["HOME"] + "/.mypy/myhelp/notes/" + fileelement.text+".note", "r")
-		table[_key_Results].append(f.read()+"\r\n\tfile: ~/.mypy/myhelp/notes/"+fileelement.text+".note")
+		table["File"].append(fileelement.text)
+		table["Results"].append(f.read())
                 f.close()
 
-    print tabulate(table,headers=[],tablefmt="rst")
-
-
+    print tabulate(table,headers="keys",tablefmt="grid")
 if __name__ == "__main__":
     run()

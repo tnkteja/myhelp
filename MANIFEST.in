@@ -1,4 +1,6 @@
 include DESCRIPTION.rst
+include data/tags.xml
+include data/myhelp.cfg
 
 # Include the test suite (FIXME: does not work yet)
 # recursive-include tests *

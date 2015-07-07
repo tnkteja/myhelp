@@ -2,14 +2,14 @@
 """
 import xml.etree.ElementTree as ET
 
-def isFile(note_name,files):
+def isFile(note_name):
         for fil in files:
             value = fil.attrib["value"]
             if value == note_name:
                 return True
         return False
 
-def get_file_from_files(note_name,files,rootfiles):
+def get_file_from_files(note_name):
         for fil in files:
             value = fil.attrib['value']
             if value == note_name:
@@ -19,7 +19,7 @@ def get_file_from_files(note_name,files,rootfiles):
         rootfiles.append(newfile)
         return newfile
 
-def get_tag_from_tags(tagname,tags,roottags):
+def get_tag_from_tags(tagname):
         for tag in tags:
             value = tag.attrib['value']
             if value == tagname:
@@ -48,15 +48,13 @@ def get_tags_from_file(note_name):
             filetaglist.append(tag.text)
         return filetaglist
 
-def modify_tags_xml(note_name,definedtags,files,rootfiles,tags,roottags,tree,TAGS_XML_DIR):
-    fil = get_file_from_files(note_name,files,rootfiles)
+def modify_tags_xml(note_name,definedtags):
+    fil = get_file_from_files(note_name)
     add_tags_to_file(fil,definedtags)
-    print definedtags
+
     for definedtag in definedtags:
-        tag = get_tag_from_tags(definedtag,tags,roottags)
+        tag = get_tag_from_tags(definedtag)
         add_file_to_tag(note_name,tag)
+        global TAGS_XML_DIR
         tree.write(TAGS_XML_DIR)
-        print "Done"
-
-
 
